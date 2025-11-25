@@ -19,11 +19,11 @@ export default function Home() {
   };
 
   return (
-      <>
+      <div className='place-content-center'>
         🎵 Spotify Taste Mixer
-
-        <button onClick={handleLogin}>LOGIN</button>
-      </>  
+        <br></br>
+        <button className='p-2 rounded-full bg-purple-200 text-purple-600 hover:bg-purple-600 hover:text-purple-200' onClick={handleLogin}>LOGIN</button>
+      </div>  
   );
 }
 
