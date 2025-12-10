@@ -1,8 +1,8 @@
 "use client"
 
-import ArtistWidget from "./widgets/ArtistWidget";
-import GenreWidget from "./widgets/GenreWidget";
-import MoodWidget from "./widgets/MoodWidget";
+import ArtistWidget from "../widgets/ArtistWidget";
+import GenreWidget from "../widgets/GenreWidget";
+import PopularityWidget from "../widgets/PopularityWidget";
 import Preferences from "./Preferences";
 import PlaylistDisplay from "./PlaylistDisplay";
 import { generatePlaylist } from "@/lib/spotify";
@@ -13,12 +13,19 @@ import { useState } from "react";
 export default function WidgetBox() {
     const [artists, setArtists] = useState([]);
     const [genres, setGenres] = useState([]);
-    //const [playlist, setPlaylist] = useState(null);
+    const [popularity, setPopularity] = useState({
+        min: 0,
+        max: 100
+    })
+
     const [preferences, setPreferences] = useState({
         artists: [],
         genres: [],
         decades: [],
-        popularity: []
+        popularity: {
+            min: 0,
+            max: 100
+        }
     });
 
     // Confirmar preferencias
@@ -27,7 +34,7 @@ export default function WidgetBox() {
             artists: artists,
             genres: genres,
             decades: [],
-            popularity: []
+            popularity: popularity
         }
 
         setPreferences(updatedPreferences)
@@ -71,6 +78,7 @@ export default function WidgetBox() {
                 <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <ArtistWidget seleccionarArtista={seleccionarArtista} />
                     <GenreWidget seleccionarGenero={seleccionarGenero} />
+                    <PopularityWidget setPopularity={setPopularity}/>
                     {/* Más widgets aquí en el futuro */}
                 </div>
 

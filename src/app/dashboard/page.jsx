@@ -1,7 +1,7 @@
 "use client"
 
-import WidgetBox from "@/components/WidgetBox";
-import PlaylistDisplay from "@/components/PlaylistDisplay";
+import WidgetBox from "@/components/layout/WidgetBox";
+import PlaylistDisplay from "@/components/layout/PlaylistDisplay";
 import { useState } from "react";
 
 export default function Dashboard() {

@@ -1,5 +1,5 @@
 "use client"
-import WidgetItem from "./WidgetItem";
+import WidgetItem from "../widgets/items/WidgetItem";
 import { useState } from "react";
 
 export default function Preferences({ artists, seleccionarArtista, genres, seleccionarGenero }) {

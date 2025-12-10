@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
 
-import PlaylistItem from "./PlaylisItem";
+import PlaylistItem from "../widgets/items/PlaylisItem";
 import { generatePlaylist } from "@/lib/spotify";
 
 export default function PlaylistDisplay({ confirmarPreferencias }) {

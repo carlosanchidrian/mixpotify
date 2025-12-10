@@ -1,7 +1,7 @@
 import { getArtists } from "@/app/api/artists";
 import { getTop } from "@/app/api/user";
 import { useEffect, useState } from "react";
-import WidgetItem from "../WidgetItem";
+import WidgetItem from "./items/WidgetItem";
 
 export default function ({ seleccionarArtista }) {
     const [defaultArtists, setDefaultArtists] = useState([]);

@@ -13,7 +13,7 @@ export async function generatePlaylist(preferences) {
   // 1. Obtener top tracks de artistas seleccionados
   for (const artist of artists) {
     const tracks = await fetch(
-      `https://api.spotify.com/v1/artists/${artist.id}/top-tracks`,
+      `https://api.spotify.com/v1/artists/${artist.id}/top-tracks&market=ES`,
       {
         headers
       }
@@ -26,7 +26,7 @@ export async function generatePlaylist(preferences) {
   // 2. Buscar por géneros
   for (const genre of genres) {
     const results = await fetch(
-      `https://api.spotify.com/v1/search?type=track&q=genre:${genre}&limit=20`,
+      `https://api.spotify.com/v1/search?type=track&q=genre:${genre}&limit=50&market=ES`,
       {
         headers
       }
@@ -46,13 +46,14 @@ export async function generatePlaylist(preferences) {
   //   });
   // }
 
-  // // 4. Filtrar por popularidad
-  // if (popularity) {
-  //   const [min, max] = popularity;
-  //   allTracks = allTracks.filter(
-  //     track => track.popularity >= min && track.popularity <= max
-  //   );
-  // }
+  // 4. Filtrar por popularidad
+  if (popularity) {
+    const {min, max} = popularity;
+    allTracks = allTracks.filter(
+      track => track.popularity >= min && track.popularity <= max
+    );
+  }
+  console.log(allTracks);
 
   // 5. Eliminar duplicados y limitar a 30 canciones
   const uniqueTracks = Array.from(
