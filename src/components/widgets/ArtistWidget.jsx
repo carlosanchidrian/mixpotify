@@ -3,10 +3,11 @@ import { getTop } from "@/app/api/user";
 import { useEffect, useState } from "react";
 import WidgetItem from "../WidgetItem";
 
-export default function ({ setArtists }) {
+export default function ({ seleccionarArtista }) {
     const [defaultArtists, setDefaultArtists] = useState([]);
     const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
+    const [selectedArtists, setSelectedArtists] = useState([]);
 
     // Setup inicial con carga de artistas favoritos del usuario (para hacer display si no ha buscado nada)
     useEffect(() => {
@@ -37,17 +38,6 @@ export default function ({ setArtists }) {
         return () => clearTimeout(timer);
     }, [search]);
 
-    // Funcion para añadir id de artista seleccionado a la lista de artistas para generacion posterior de la playlist
-    const seleccionarArtista = (artistId) => {
-        setArtists(prevArtists => {
-            // Evita duplicados por ID
-            if (prevArtists.some(id => id === artistId)) {
-                return prevArtists;
-            }
-            return [...prevArtists, artistId];
-        });
-    };
-
     return (
         <div className="flex flex-col bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden h-80">
 
@@ -73,11 +63,11 @@ export default function ({ setArtists }) {
                 <div className="divide-y divide-gray-100">
                     {search === "" ?
                         (defaultArtists.map(artist =>
-                            <WidgetItem key={artist.id} image={artist.images?.[0]?.url} name={artist.name} id={artist.id} seleccionarArtista={seleccionarArtista}/>
+                            <WidgetItem key={artist.id} artist={artist} seleccionarArtista={seleccionarArtista} />
                         ))
                         :
                         (searchResult.map(artist =>
-                            <WidgetItem key={artist.id} image={artist.images?.[0]?.url} name={artist.name} id={artist.id} seleccionarArtista={seleccionarArtista}/>
+                            <WidgetItem key={artist.id} artist={artist} seleccionarArtista={seleccionarArtista} />
                         ))}
                 </div>
             </div>

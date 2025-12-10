@@ -1,17 +1,25 @@
+import { getAccessToken } from "@/lib/auth"
+
 export async function generatePlaylist(preferences) {
   const { artists, genres, decades, popularity } = preferences;
   const token = getAccessToken();
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  };
+
   let allTracks = [];
 
   // 1. Obtener top tracks de artistas seleccionados
   for (const artist of artists) {
     const tracks = await fetch(
-      `https://api.spotify.com/v1/artists/${artist.id}/top-tracks?market=US`,
+      `https://api.spotify.com/v1/artists/${artist}/top-tracks`,
       {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers
       }
     );
     const data = await tracks.json();
+    // console.log('Response data:', data);
     allTracks.push(...data.tracks);
   }
 
@@ -20,7 +28,7 @@ export async function generatePlaylist(preferences) {
     const results = await fetch(
       `https://api.spotify.com/v1/search?type=track&q=genre:${genre}&limit=20`,
       {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers
       }
     );
     const data = await results.json();
