@@ -7,7 +7,6 @@ export default function ({ seleccionarArtista }) {
     const [defaultArtists, setDefaultArtists] = useState([]);
     const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
-    const [selectedArtists, setSelectedArtists] = useState([]);
 
     // Setup inicial con carga de artistas favoritos del usuario (para hacer display si no ha buscado nada)
     useEffect(() => {

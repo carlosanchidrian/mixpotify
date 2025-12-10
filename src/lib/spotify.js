@@ -13,13 +13,13 @@ export async function generatePlaylist(preferences) {
   // 1. Obtener top tracks de artistas seleccionados
   for (const artist of artists) {
     const tracks = await fetch(
-      `https://api.spotify.com/v1/artists/${artist}/top-tracks`,
+      `https://api.spotify.com/v1/artists/${artist.id}/top-tracks`,
       {
         headers
       }
     );
     const data = await tracks.json();
-    // console.log('Response data:', data);
+    console.log('Response data:', data);
     allTracks.push(...data.tracks);
   }
 
@@ -35,29 +35,28 @@ export async function generatePlaylist(preferences) {
     allTracks.push(...data.tracks.items);
   }
 
-  // 3. Filtrar por década
-  if (decades.length > 0) {
-    allTracks = allTracks.filter(track => {
-      const year = new Date(track.album.release_date).getFullYear();
-      return decades.some(decade => {
-        const decadeStart = parseInt(decade);
-        return year >= decadeStart && year < decadeStart + 10;
-      });
-    });
-  }
+  // // 3. Filtrar por década
+  // if (decades.length > 0) {
+  //   allTracks = allTracks.filter(track => {
+  //     const year = new Date(track.album.release_date).getFullYear();
+  //     return decades.some(decade => {
+  //       const decadeStart = parseInt(decade);
+  //       return year >= decadeStart && year < decadeStart + 10;
+  //     });
+  //   });
+  // }
 
-  // 4. Filtrar por popularidad
-  if (popularity) {
-    const [min, max] = popularity;
-    allTracks = allTracks.filter(
-      track => track.popularity >= min && track.popularity <= max
-    );
-  }
+  // // 4. Filtrar por popularidad
+  // if (popularity) {
+  //   const [min, max] = popularity;
+  //   allTracks = allTracks.filter(
+  //     track => track.popularity >= min && track.popularity <= max
+  //   );
+  // }
 
   // 5. Eliminar duplicados y limitar a 30 canciones
   const uniqueTracks = Array.from(
-    new Map(allTracks.map(track => [track.id, track])).values()
-  ).slice(0, 30);
-
+    new Map(allTracks.map(track => [track.id, track])).values())//.slice(0, 30);
+  // console.log(uniqueTracks);
   return uniqueTracks;
 }
