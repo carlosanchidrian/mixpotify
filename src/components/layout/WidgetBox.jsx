@@ -5,6 +5,7 @@ import GenreWidget from "../widgets/GenreWidget";
 import PopularityWidget from "../widgets/PopularityWidget";
 import Preferences from "./Preferences";
 import PlaylistDisplay from "./PlaylistDisplay";
+import DecadeWidget from "../widgets/DecadeWidget";
 import { generatePlaylist } from "@/lib/spotify";
 
 
@@ -17,6 +18,8 @@ export default function WidgetBox() {
         min: 0,
         max: 100
     })
+    const [decades, setDecades] = useState([]);
+
 
     const [preferences, setPreferences] = useState({
         artists: [],
@@ -33,7 +36,7 @@ export default function WidgetBox() {
         const updatedPreferences = {
             artists: artists,
             genres: genres,
-            decades: [],
+            decades: decades,
             popularity: popularity
         }
 
@@ -64,12 +67,23 @@ export default function WidgetBox() {
         });
     };
 
+    // Funcion para añadir decada seleccionada a la lista de decadas para generacion posterior de la playlist
+    const seleccionarDecada = (decade) => {
+        setDecades(prevDecades => {
+            // Elimianar al volver a hacer click
+            if (prevDecades.some(d => d === decade)) {
+                return prevDecades.filter(d => d != decade);
+            }
+            return [...prevDecades, decade];
+        });
+    };
+
 
     return (
         <div className="space-y-8">
             {/* Preferences en la parte superior - ancho completo */}
             <div className="max-w-7xl mx-auto">
-                <Preferences artists={artists} seleccionarArtista={seleccionarArtista} genres={genres} seleccionarGenero={seleccionarGenero} />
+                <Preferences artists={artists} seleccionarArtista={seleccionarArtista} genres={genres} seleccionarGenero={seleccionarGenero} popularity={popularity} setPopularity={setPopularity} decades={decades} seleccionarDecada={seleccionarDecada} />
             </div>
 
             {/* Grid principal: Widgets a la izquierda, Playlist a la derecha */}
@@ -78,7 +92,8 @@ export default function WidgetBox() {
                 <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <ArtistWidget seleccionarArtista={seleccionarArtista} />
                     <GenreWidget seleccionarGenero={seleccionarGenero} />
-                    <PopularityWidget setPopularity={setPopularity}/>
+                    <PopularityWidget popularity={popularity} setPopularity={setPopularity} />
+                    <DecadeWidget seleccionarDecada={seleccionarDecada} />
                     {/* Más widgets aquí en el futuro */}
                 </div>
 

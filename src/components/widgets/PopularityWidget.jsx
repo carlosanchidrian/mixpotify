@@ -1,17 +1,15 @@
 import { useState } from "react";
 
-export default function PopularityWidget({ setPopularity }) {
+export default function PopularityWidget({ popularity, setPopularity }) {
     const [popularidadMin, setPopularidadMin] = useState(0);
     const [popularidadMax, setPopularidadMax] = useState(100);
 
 
     function updatePopularityMin(newValue) {
-        setPopularidadMin(newValue);
         setPopularity(prev => ({ ...prev, min: newValue }))
     }
 
     function updatePopularityMax(newValue) {
-        setPopularidadMax(newValue);
         setPopularity(prev => ({ ...prev, max: newValue }))
     }
 
@@ -33,8 +31,8 @@ export default function PopularityWidget({ setPopularity }) {
                         min="0"
                         max="100"
                         step="5"
-                        value={popularidadMin}
-                        onChange={(e) => updatePopularityMin(e.target.value)}
+                        value={popularity.min}
+                        onChange={(e) => setPopularity(prev => ({ ...prev, min: parseInt(e.target.value) }))}
                         className="w-full"
                     />
                     <span className="font-semibold text-gray-800/60">{popularidadMin}</span>
@@ -45,8 +43,8 @@ export default function PopularityWidget({ setPopularity }) {
                         min="0"
                         max="100"
                         step="5"
-                        value={popularidadMax}
-                        onChange={(e) => updatePopularityMax(e.target.value)}
+                        value={popularity.max}
+                        onChange={(e) => setPopularity(prev => ({ ...prev, max: parseInt(e.target.value) }))}
                         className="w-full"
                     />
                     <span className="font-semibold text-gray-800/60">{popularidadMax}</span>
