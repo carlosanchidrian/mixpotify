@@ -7,6 +7,7 @@ import Preferences from "./Preferences";
 import PlaylistDisplay from "./PlaylistDisplay";
 import DecadeWidget from "../widgets/DecadeWidget";
 import PlaylistWidget from "../widgets/PlaylistsWidget";
+import TracksWidget from "../widgets/TracksWidget";
 
 import { useState } from "react";
 
@@ -19,6 +20,7 @@ export default function WidgetBox() {
     })
     const [decades, setDecades] = useState([]);
     const [playlists, setPlaylists] = useState([]);
+    const [selectedTracks, setSelectedTracks] = useState([]);
 
     const [preferences, setPreferences] = useState({
         artists: [],
@@ -28,7 +30,8 @@ export default function WidgetBox() {
             min: 0,
             max: 100
         },
-        playlists:[]
+        playlists:[],
+        selectedTracks:[]
     });
 
     // Confirmar preferencias
@@ -38,7 +41,8 @@ export default function WidgetBox() {
             genres: genres,
             decades: decades,
             popularity: popularity,
-            playlists: playlists
+            playlists: playlists,
+            selectedTracks:selectedTracks
         }
 
         setPreferences(updatedPreferences)
@@ -90,11 +94,22 @@ export default function WidgetBox() {
         });
     };
 
+    // Funcion para añadir canciones seleccionado a la lista de canciones para generacion posterior de la playlist
+    const seleccionarCanciones = (track) => {
+        setSelectedTracks(prevTracks => {
+            // Elimianar al volver a hacer click
+            if (prevTracks.some(c => c.id === track.id)) {
+                return prevTracks.filter(c => c.id != track.id);
+            }
+            return [...prevTracks, track];
+        });
+    };
+
     return (
         <div className="space-y-8">
             {/* Preferences en la parte superior - ancho completo */}
             <div className="max-w-7xl mx-auto">
-                <Preferences artists={artists} seleccionarArtista={seleccionarArtista} genres={genres} seleccionarGenero={seleccionarGenero} popularity={popularity} setPopularity={setPopularity} decades={decades} seleccionarDecada={seleccionarDecada} playlists={playlists} seleccionarPlaylist={seleccionarPlaylist} />
+                <Preferences artists={artists} seleccionarArtista={seleccionarArtista} genres={genres} seleccionarGenero={seleccionarGenero} popularity={popularity} setPopularity={setPopularity} decades={decades} seleccionarDecada={seleccionarDecada} playlists={playlists} seleccionarPlaylist={seleccionarPlaylist} selectedTracks={selectedTracks} seleccionarCanciones={seleccionarCanciones} />
             </div>
 
             {/* Grid principal: Widgets a la izquierda, Playlist a la derecha */}
@@ -106,6 +121,7 @@ export default function WidgetBox() {
                     <PopularityWidget popularity={popularity} setPopularity={setPopularity} />
                     <DecadeWidget seleccionarDecada={seleccionarDecada} />
                     <PlaylistWidget seleccionarPlaylist={seleccionarPlaylist} />
+                    <TracksWidget seleccionarCanciones={seleccionarCanciones} />
                     {/* Más widgets aquí en el futuro */}
                 </div>
 

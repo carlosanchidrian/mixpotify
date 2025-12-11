@@ -2,7 +2,7 @@ import { getAccessToken } from "@/lib/auth"
 import { playlistSearch } from "@/app/api/playlists";
 
 export async function generatePlaylist(preferences) {
-  const { artists, genres, decades, popularity, playlists } = preferences;
+  const { artists, genres, decades, popularity, playlists, selectedTracks } = preferences;
   const token = getAccessToken();
   const headers = {
     'Authorization': `Bearer ${token}`,
@@ -36,7 +36,12 @@ export async function generatePlaylist(preferences) {
     allTracks.push(...data.tracks.items);
   }
 
-  // 3. Añadir canciones de playlists seleccionadas
+  // 3. Añadir canciones seleccionadas
+  if (selectedTracks.length > 0) {
+      allTracks.push(...selectedTracks)
+  }
+
+  // 4. Añadir canciones de playlists seleccionadas
   for (const playlist of playlists) {
     const tracks = await fetch(
       `https://api.spotify.com/v1/playlists/${playlist.id}`,
@@ -46,13 +51,13 @@ export async function generatePlaylist(preferences) {
     );
     const data = await tracks.json();
     console.log('Response data:', data.tracks.items);
-    data.tracks.items.map(item => 
+    data.tracks.items.map(item =>
       allTracks.push(item.track)
     );
 
   }
 
-  // 4. Filtrar por década
+  // 5. Filtrar por década
   if (decades.length > 0) {
     allTracks = allTracks.filter(track => {
       const year = new Date(track.album.release_date).getFullYear();
@@ -63,7 +68,7 @@ export async function generatePlaylist(preferences) {
     });
   }
 
-  // 5. Filtrar por popularidad
+  // 6. Filtrar por popularidad
   if (popularity) {
     const { min, max } = popularity;
     allTracks = allTracks.filter(

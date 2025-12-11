@@ -1,4 +1,4 @@
-import {spotifyRequest} from "./SpotifyApiCalls"
+import { spotifyRequest } from "./SpotifyApiCalls"
 
 // Funcion para fetch de playlist del usuario (primeras 50)
 export async function getUserPlaylists() {
