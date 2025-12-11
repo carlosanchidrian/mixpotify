@@ -7,7 +7,7 @@ export default function DecadeWidget( { seleccionarDecada }) {
 
             <div className="p-4 border-b border-gray-100 bg-gray-50/50">
                 <h2 className="text-lg font-bold text-gray-800">
-                    Generos
+                    Decadas
                 </h2>
             </div>
 

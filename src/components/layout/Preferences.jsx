@@ -1,16 +1,20 @@
 "use client"
 import WidgetItem from "../widgets/items/WidgetItem";
+import PlaylistWidgetItem from "../widgets/items/PlaylistWidgetItem";
 import { useState } from "react";
 
-export default function Preferences({ artists, seleccionarArtista, genres, seleccionarGenero, popularity, setPopularity, decades, seleccionarDecada }) {
+export default function Preferences({ artists, seleccionarArtista, genres, seleccionarGenero, popularity, setPopularity, decades, seleccionarDecada, playlists, seleccionarPlaylist }) {
     const [isOpen1, setIsOpen1] = useState(false);
     const [isOpen2, setIsOpen2] = useState(false);
     const [isOpen3, setIsOpen3] = useState(false);
     const [isOpen4, setIsOpen4] = useState(false);
+    const [isOpen5, setIsOpen5] = useState(false);
 
 
     return (
         <div className="bg-white border rounded-lg p-4 mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">Preferencias seleccionadas:</h2>
+
             <h4
                 onClick={() => setIsOpen1(!isOpen1)}
                 className="font-semibold cursor-pointer text-gray-800"
@@ -73,6 +77,20 @@ export default function Preferences({ artists, seleccionarArtista, genres, selec
                         </div>
                     )
                     }
+                </div>
+            )}
+
+            <h4
+                onClick={() => setIsOpen5(!isOpen5)}
+                className="font-semibold cursor-pointer text-gray-800"
+            >
+                Playlists seleccionados ({playlists.length})
+            </h4>
+            {isOpen5 && (
+                <div className="flex flex-wrap gap-2 mt-3">
+                    {playlists.map(playlist =>
+                        <PlaylistWidgetItem key={playlist.id} playlist={playlist} seleccionarPlaylist={seleccionarPlaylist} />
+                    )}
                 </div>
             )}
         </div>

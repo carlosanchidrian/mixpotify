@@ -1,5 +1,3 @@
-
-
 export default function WidgetItem({ artist , seleccionarArtista}){
     //console.log(image, name, id)
     return(

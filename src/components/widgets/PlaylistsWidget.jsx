@@ -1,29 +1,30 @@
-import { getArtists, getTop } from "@/app/api/artists";
+import { getUserPlaylists, getPlaylists } from "@/app/api/playlists";
 import { useEffect, useState } from "react";
-import WidgetItem from "./items/WidgetItem";
+import PlaylistWidgetItem from "./items/PlaylistWidgetItem";
 
-export default function ArtistWidget({ seleccionarArtista }) {
-    const [defaultArtists, setDefaultArtists] = useState([]);
+export default function PlaylistWidget({ seleccionarPlaylist }) {
+    const [defaultPlaylists, setDefaultPlaylists] = useState([]);
     const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
 
-    // Setup inicial con carga de artistas favoritos del usuario (para hacer display si no ha buscado nada)
+    // Setup inicial con carga de playlist favoritos del usuario (para hacer display si no ha buscado nada)
     useEffect(() => {
         async function fetchData() {
-            const response = await getTop("artists");
+            const response = await getUserPlaylists();
             console.log(response.items)
-            setDefaultArtists(response.items);
+            setDefaultPlaylists(response.items);
         }
         fetchData();
     }, []);
 
-    // Busqueda de artistas con debouncing de 300 ms
+    // Busqueda de playlist con debouncing de 300 ms
     useEffect(() => {
         const timer = setTimeout(async () => {
             if (search.trim()) {
                 try {
-                    const response = await getArtists(search);
-                    setSearchResult(response.artists.items || []);
+                    const response = await getPlaylists(search);
+                    console.log(response.playlists.items)
+                    setSearchResult(response.playlists.items || []);
                 } catch (error) {
                     console.error("Error en búsqueda:", error);
                     setSearchResult([]);
@@ -41,7 +42,7 @@ export default function ArtistWidget({ seleccionarArtista }) {
 
             <div className="p-4 border-b border-gray-100 bg-gray-50/50">
                 <h2 className="text-lg font-bold text-gray-800">
-                    Artistas
+                    Playlists
                 </h2>
             </div>
 
@@ -52,7 +53,7 @@ export default function ArtistWidget({ seleccionarArtista }) {
                     type="text"
                     value={search}
                     onChange={e => setSearch(e.target.value)}
-                    placeholder="Buscar artista..."
+                    placeholder="Buscar playlist..."
                 />
             </div>
 
@@ -60,12 +61,14 @@ export default function ArtistWidget({ seleccionarArtista }) {
             <div className="flex-1 overflow-y-auto">
                 <div className="divide-y divide-gray-100">
                     {search === "" ?
-                        (defaultArtists.map(artist =>
-                            <WidgetItem key={artist.id} artist={artist} seleccionarArtista={seleccionarArtista} />
+                        (defaultPlaylists.map(playlist =>
+                            <PlaylistWidgetItem key={playlist.id} playlist={playlist} seleccionarPlaylist={seleccionarPlaylist} />
                         ))
                         :
-                        (searchResult.map(artist =>
-                            <WidgetItem key={artist.id} artist={artist} seleccionarArtista={seleccionarArtista} />
+                        (searchResult.map(playlist => playlist === null ? 
+                            null
+                            :
+                            (<PlaylistWidgetItem key={playlist.id} playlist={playlist} seleccionarPlaylist={seleccionarPlaylist} />)
                         ))}
                 </div>
             </div>
