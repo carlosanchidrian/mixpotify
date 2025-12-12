@@ -15,6 +15,18 @@ export default function PlaylistDisplay({ confirmarPreferencias }) {
         console.log(newTracks);
     }
 
+    // Funcion para añadir canciones seleccionado a la lista de canciones para generacion posterior de la playlist
+    const seleccionarCanciones = (track) => {
+        setTracks(prevTracks => {
+            // Elimianar al volver a hacer click
+            if (prevTracks.some(c => c.id === track.id)) {
+                return prevTracks.filter(c => c.id != track.id);
+            }
+            return [...prevTracks, track];
+        });
+    };
+
+
     return (
         <div className="bg-white rounded-lg shadow p-4">
             {/* Botones */}
@@ -26,7 +38,7 @@ export default function PlaylistDisplay({ confirmarPreferencias }) {
 
             {/* Resultados */}
             <div className="space-y-2 max-h-[500px] overflow-y-auto">
-                {tracks.map(track => <PlaylistItem key={track.id} track={track} />)}
+                {tracks.map(track => <PlaylistItem key={track.id} track={track} seleccionarCanciones={seleccionarCanciones} />)}
             </div>
         </div>
     );
