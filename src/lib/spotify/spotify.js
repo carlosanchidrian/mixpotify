@@ -37,7 +37,7 @@ export async function generatePlaylist(preferences) {
 
   // 3. Añadir canciones seleccionadas
   if (selectedTracks.length > 0) {
-      allTracks.push(...selectedTracks)
+    allTracks.push(...selectedTracks)
   }
 
   // 4. Añadir canciones de playlists seleccionadas
@@ -70,9 +70,13 @@ export async function generatePlaylist(preferences) {
   // 6. Filtrar por popularidad
   if (popularity) {
     const { min, max } = popularity;
-    allTracks = allTracks.filter(
-      track => track.popularity >= min && track.popularity <= max
-    );
+    allTracks = allTracks
+      .filter(t => t && t.popularity != null) // <- evita nulls
+      .filter(
+        t =>
+          t.popularity >= min &&
+          t.popularity <= max
+      );
   }
 
   // 6. Eliminar duplicados y limitar a 30 canciones

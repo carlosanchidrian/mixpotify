@@ -9,6 +9,8 @@ import DecadeWidget from "../widgets/DecadeWidget";
 import PlaylistWidget from "../widgets/PlaylistsWidget";
 import TracksWidget from "../widgets/TracksWidget";
 import { useState } from "react";
+import { logout } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 export default function WidgetBox() {
     const [artists, setArtists] = useState([]);
@@ -32,6 +34,8 @@ export default function WidgetBox() {
         playlists: [],
         selectedTracks: []
     });
+
+    const router = useRouter();
 
     // Confirmar preferencias
     function confirmarPreferencias() {
@@ -104,6 +108,11 @@ export default function WidgetBox() {
         });
     };
 
+    const handleLogout = async () => {
+        await logout();          // limpias tokens / sesión
+        router.push("/");        // navegas a home
+    };
+
     return (
         <div className="mx-auto max-w-7xl space-y-8 px-4 py-8">
             {/* Preferences en la parte superior - ancho completo */}
@@ -139,8 +148,18 @@ export default function WidgetBox() {
 
                 {/* Columna de playlist (1/3 del ancho en pantallas grandes) */}
                 <div className="lg:col-span-1">
-                    <PlaylistDisplay preferences={preferences} confirmarPreferencias={confirmarPreferencias} />
+                    <PlaylistDisplay confirmarPreferencias={confirmarPreferencias} setPreferences={setPreferences} />
                 </div>
+            </div>
+
+            {/* Botón logout ocupando el ancho de la columna de widgets */}
+            <div className="lg:col-span-2">
+                <button
+                    onClick={handleLogout}
+                    className="mt-2 w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-semibold text-white shadow-md shadow-red-600/40 transition hover:bg-red-500 hover:shadow-red-500/50"
+                >
+                    Log out
+                </button>
             </div>
         </div>
     );
