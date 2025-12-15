@@ -1,11 +1,10 @@
 "use client"
-import { useState } from "react";
 
+import { useState } from "react";
 import PlaylistItem from "../widgets/items/PlaylisItem";
-import { generatePlaylist } from "@/lib/spotify";
+import { generatePlaylist } from "@/lib/spotify/spotify";
 
 export default function PlaylistDisplay({ confirmarPreferencias }) {
-
     const [tracks, setTracks] = useState([]);
 
     async function componerPlaylist() {
@@ -26,19 +25,33 @@ export default function PlaylistDisplay({ confirmarPreferencias }) {
         });
     };
 
-
     return (
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="rounded-xl border border-slate-800/60 bg-slate-900/70 p-4 shadow-lg shadow-black/30">
             {/* Botones */}
-            <div>
-                <button onClick={() => componerPlaylist()} className="p-2 rounded-full bg-purple-200 text-purple-600 hover:bg-purple-600 hover:text-purple-200">Generar Playlist</button>
-                <button onClick={() => setTracks([])} className="p-2 rounded-full bg-purple-200 text-purple-600 hover:bg-purple-600 hover:text-purple-200">Resetear</button>
-
+            <div className="mb-4 flex gap-3">
+                <button
+                    onClick={() => componerPlaylist()}
+                    className="flex items-center gap-2 rounded-full bg-purple-500 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-purple-500/30 transition hover:-translate-y-[1px] hover:bg-purple-400 hover:shadow-purple-400/40"
+                >
+                    Generar Playlist
+                </button>
+                <button
+                    onClick={() => setTracks([])}
+                    className="flex items-center gap-2 rounded-full border border-slate-600 bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-800 hover:border-purple-500/60 hover:text-purple-100"
+                >
+                    Resetear
+                </button>
             </div>
 
             {/* Resultados */}
-            <div className="space-y-2 max-h-[500px] overflow-y-auto">
-                {tracks.map(track => <PlaylistItem key={track.id} track={track} seleccionarCanciones={seleccionarCanciones} />)}
+            <div className="max-h-[500px] space-y-2 overflow-y-auto">
+                {tracks.map(track => (
+                    <PlaylistItem
+                        key={track.id}
+                        track={track}
+                        seleccionarCanciones={seleccionarCanciones}
+                    />
+                ))}
             </div>
         </div>
     );

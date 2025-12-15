@@ -8,7 +8,6 @@ import PlaylistDisplay from "./PlaylistDisplay";
 import DecadeWidget from "../widgets/DecadeWidget";
 import PlaylistWidget from "../widgets/PlaylistsWidget";
 import TracksWidget from "../widgets/TracksWidget";
-
 import { useState } from "react";
 
 export default function WidgetBox() {
@@ -30,8 +29,8 @@ export default function WidgetBox() {
             min: 0,
             max: 100
         },
-        playlists:[],
-        selectedTracks:[]
+        playlists: [],
+        selectedTracks: []
     });
 
     // Confirmar preferencias
@@ -42,7 +41,7 @@ export default function WidgetBox() {
             decades: decades,
             popularity: popularity,
             playlists: playlists,
-            selectedTracks:selectedTracks
+            selectedTracks: selectedTracks
         }
 
         setPreferences(updatedPreferences)
@@ -106,16 +105,29 @@ export default function WidgetBox() {
     };
 
     return (
-        <div className="space-y-8">
+        <div className="mx-auto max-w-7xl space-y-8 px-4 py-8">
             {/* Preferences en la parte superior - ancho completo */}
-            <div className="max-w-7xl mx-auto">
-                <Preferences artists={artists} seleccionarArtista={seleccionarArtista} genres={genres} seleccionarGenero={seleccionarGenero} popularity={popularity} setPopularity={setPopularity} decades={decades} seleccionarDecada={seleccionarDecada} playlists={playlists} seleccionarPlaylist={seleccionarPlaylist} selectedTracks={selectedTracks} seleccionarCanciones={seleccionarCanciones} />
+            <div>
+                <Preferences
+                    artists={artists}
+                    seleccionarArtista={seleccionarArtista}
+                    genres={genres}
+                    seleccionarGenero={seleccionarGenero}
+                    popularity={popularity}
+                    setPopularity={setPopularity}
+                    decades={decades}
+                    seleccionarDecada={seleccionarDecada}
+                    playlists={playlists}
+                    seleccionarPlaylist={seleccionarPlaylist}
+                    selectedTracks={selectedTracks}
+                    seleccionarCanciones={seleccionarCanciones}
+                />
             </div>
 
             {/* Grid principal: Widgets a la izquierda, Playlist a la derecha */}
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                 {/* Columna de widgets (2/3 del ancho en pantallas grandes) */}
-                <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:col-span-2">
                     <ArtistWidget seleccionarArtista={seleccionarArtista} />
                     <GenreWidget seleccionarGenero={seleccionarGenero} />
                     <PopularityWidget popularity={popularity} setPopularity={setPopularity} />

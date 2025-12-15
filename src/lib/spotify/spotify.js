@@ -1,5 +1,4 @@
 import { getAccessToken } from "@/lib/auth"
-import { playlistSearch } from "@/app/api/playlists";
 
 export async function generatePlaylist(preferences) {
   const { artists, genres, decades, popularity, playlists, selectedTracks } = preferences;

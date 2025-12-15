@@ -2,15 +2,21 @@ import { X } from "lucide-react";
 
 export default function PlaylistItem({ track, seleccionarCanciones }) {
     return (
-        <div className="flex items-center gap-4 p-3 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-colors">
-            <img className="w-12 h-12 rounded-full object-cover border border-gray-200" src={track.album.images?.[0]?.url} alt="track photo" />
-            <h3 className="text-lg font-semibold text-gray-800">{track.name}</h3>
+        <div className="flex items-center gap-4 rounded-lg bg-slate-900/60 p-3 shadow-sm transition-colors hover:bg-slate-800/80">
+            <img
+                className="h-12 w-12 rounded-full border border-slate-700/80 object-cover"
+                src={track.album.images?.[0]?.url}
+                alt="track photo"
+            />
+            <h3 className="text-sm font-semibold text-slate-100">
+                {track.name}
+            </h3>
             <button
                 onClick={() => seleccionarCanciones(track)}
-                className="ml-auto p-1 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                className="ml-auto rounded-full p-1 text-red-400 transition-all duration-200 hover:bg-red-500/10 hover:text-red-300 focus:outline-none focus:ring-2 focus:ring-red-500/60"
                 aria-label="Cerrar"
             >
-                <X />
+                <X className="h-4 w-4" />
             </button>
         </div>
     );

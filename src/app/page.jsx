@@ -19,70 +19,43 @@ export default function Home() {
   };
 
   return (
-  <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-purple-900 text-slate-100">
-    <div className="mx-auto flex max-w-5xl flex-col items-center justify-center gap-10 px-6 py-16 md:flex-row">
-      
-      <section className="max-w-xl space-y-6 text-center md:text-left">
-        <span className="inline-flex items-center rounded-full bg-purple-900/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-purple-300">
-          MIXPOTIFY
-        </span>
+    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-purple-900 text-slate-100">
+      <div className="mx-auto flex max-w-5xl flex-col items-center justify-center gap-10 px-6 py-16 md:flex-row">
 
-        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Mezcla tus gustos.
-          <span className="block text-purple-400">Crea playlists únicas al instante.</span>
-        </h1>
+        <section className="max-w-xl space-y-6 text-center md:text-left">
+          <span className="inline-flex items-center rounded-full bg-purple-900/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-purple-300">
+            MIXPOTIFY
+          </span>
 
-        <p className="text-sm text-slate-300 sm:text-base">
-          Conecta tu cuenta de Spotify, fusiona tus artistas y géneros favoritos y genera playlists
-          dinámicas para cada mood, plan o persona en segundos.
-        </p>
+          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Mezcla tus gustos.
+            <span className="block text-purple-400">Crea playlists únicas al instante.</span>
+          </h1>
 
-        <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-start">
-          <button
-            onClick={handleLogin}
-            className="flex items-center gap-2 rounded-full bg-purple-500 px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition hover:-translate-y-[1px] hover:bg-purple-400 hover:shadow-purple-400/40"
-          >
-            Iniciar sesión con Spotify
-          </button>
-          <p className="text-xs text-slate-400">
-            Sin spam. Solo playlists nuevas en tu biblioteca.
+          <p className="text-sm text-slate-300 sm:text-base">
+            Conecta tu cuenta de Spotify, fusiona tus artistas y géneros favoritos y genera playlists
+            dinámicas para cada mood, plan o persona en segundos.
           </p>
-        </div>
 
-        <ul className="mt-4 grid gap-2 text-xs text-slate-300 sm:text-sm">
-          <li>• Mezcla el gusto de varios amigos en una sola playlist.</li>
-          <li>• Crea listas personalizadas para cada mood, actividad o evento en segundos.</li>
-          <li>• Guarda tus creacioens en spotify.</li>
-        </ul>
-      </section>
-    </div>
-  </main>
-);
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-start">
+            <button
+              onClick={handleLogin}
+              className="flex items-center gap-2 rounded-full bg-purple-500 px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition hover:-translate-y-[1px] hover:bg-purple-400 hover:shadow-purple-400/40"
+            >
+              Iniciar sesión con Spotify
+            </button>
+            <p className="text-xs text-slate-400">
+              Sin spam. Solo playlists nuevas en tu biblioteca.
+            </p>
+          </div>
 
-}
-
-async function testSpotifyAPI() {
-  const token = localStorage.getItem('spotify_token')
-
-  console.log('1. Testing token:', token ? '✓' : '✗')
-
-  // Test search
-  try {
-    const response = await fetch('https://api.spotify.com/v1/search?type=track&q=test&limit=1', {
-      headers: { 'Authorization': `Bearer ${token}` }
-    })
-    console.log('2. Search endpoint:', response.ok ? '✓' : '✗')
-  } catch (e) {
-    console.error('2. Search endpoint: ✗', e)
-  }
-
-  // Test user profile
-  try {
-    const response = await fetch('https://api.spotify.com/v1/me', {
-      headers: { 'Authorization': `Bearer ${token}` }
-    })
-    console.log('3. User profile:', response.ok ? '✓' : '✗')
-  } catch (e) {
-    console.error('3. User profile: ✗', e)
-  }
+          <ul className="mt-4 grid gap-2 text-xs text-slate-300 sm:text-sm">
+            <li>• Mezcla el gusto de varios amigos en una sola playlist.</li>
+            <li>• Crea listas personalizadas para cada mood, actividad o evento en segundos.</li>
+            <li>• Guarda tus creacioens en spotify.</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+  );
 }
