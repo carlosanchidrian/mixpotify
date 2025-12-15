@@ -13,7 +13,7 @@ Mixpotify es una aplicación web construida con Next.js que permite mezclar tu g
   - Playlists y tracks de usuario para "seedear" la mezcla.
 - Generación de una playlist recomendada en base a las preferencias seleccionadas.
 - Posibilidad de eliminar canciones individuales de la playlist generada.
-- Guardado de la playlist generada en tu biblioteca de Spotify (en desarrollo, rama `devComponentes`).
+- Guardado de la playlist generada en tu biblioteca de Spotify.
 
 ## Stack técnico
 
@@ -36,7 +36,6 @@ Mixpotify es una aplicación web construida con Next.js que permite mezclar tu g
    ```bash
    git clone https://github.com/carlosanchidrian/mixpotify.git
    cd mixpotify
-   git checkout devComponentes
    ```
 
 2. Crea un archivo `.env.local` en la raíz con tus credenciales de Spotify:
@@ -62,12 +61,12 @@ Mixpotify es una aplicación web construida con Next.js que permite mezclar tu g
 npm run dev
 ```
 
-Visita `http://localhost:3000` para abrir la aplicación.
+Visita `http://127.0.0.1:3000` para abrir la aplicación.
 
 ## Flujo de uso
 
 1. Inicia sesión con tu cuenta de Spotify.
-2. Usa los widgets laterales para:
+2. Usa los widgets para:
    - Buscar y seleccionar artistas.
    - Elegir géneros.
    - Fijar décadas objetivo.
@@ -76,37 +75,7 @@ Visita `http://localhost:3000` para abrir la aplicación.
 3. Genera la playlist con el botón correspondiente en el panel central.
 4. Revisa las canciones propuestas:
    - Elimina las que no te interesen.
-   - (Próximamente) Añade más canciones manteniendo la lista actual.
-   - (Próximamente) Marca canciones como favoritas y persístelas en `localStorage`.
-5. Guarda la playlist en tu cuenta de Spotify usando la opción de "Guardar en biblioteca" (en desarrollo).
-
-## Estado actual y roadmap
-
-### Implementado
-
-- Estructura de proyecto en Next.js con App Router y Tailwind.
-- Widgets de:
-  - Artistas
-  - Géneros
-  - Décadas
-  - Popularidad
-  - Playlists
-  - Tracks
-- Generación básica de playlist y eliminación de canciones en el UI.
-
-### Pendiente / En progreso
-
-- Flujo completo de OAuth (tokens, refresh token, CSRF/state) como en el proyecto de referencia `nextjs-spotify`.
-- Botón de "refrescar playlist" manteniendo las mismas preferencias.
-- Añadir nuevas canciones a la playlist sin perder las actuales.
-- Sistema de favoritos persistente en `localStorage`.
-
-## Scripts disponibles
-
-- `npm run dev` – Arranca el servidor de desarrollo.
-- `npm run build` – Genera el build de producción.
-- `npm run start` – Arranca el servidor en modo producción tras el build.
-- `npm run lint` – Ejecuta ESLint.
+5. Guarda la playlist en tu cuenta de Spotify usando la opción de "Guardar en biblioteca".
 
 ## Licencia
 
