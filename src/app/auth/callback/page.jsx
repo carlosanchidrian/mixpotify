@@ -1,4 +1,3 @@
-// src/app/auth/callback/page.jsx
 import { Suspense } from "react";
 import CallbackInner from "./CallbackInner";
 

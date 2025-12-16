@@ -168,7 +168,5 @@ export default function PlaylistDisplay({ confirmarPreferencias, setPreferences 
             )}
 
         </div>
-
-
     );
 }
